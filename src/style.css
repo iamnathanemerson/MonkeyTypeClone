@@ -1,0 +1,38 @@
+.userTypingArea{
+    opacity: 0;
+    position: absolute;
+    z-index: 1;
+
+}
+.default{
+    color: rgb(209, 238, 244);
+
+}
+.correct{
+color: rgb(220, 196, 15);
+}
+.wrong{
+color: rgb(29, 192, 198)
+}
+.typeHead {
+    font-size: 1.5em;
+    color: rgb(220, 196, 15);
+    border-radius: 25px;
+    background-color:#27296d;   
+    place-items: center;
+    
+
+  }
+.typingTest2{
+    font-size: 2em;    
+    border-radius: 25px;
+    background-color: #27296d; 
+    place-items: center;
+    
+    min-width: auto;
+    min-height: auto;
+    
+    
+}
+html {background-color: rgb(22, 11, 52);
+}
