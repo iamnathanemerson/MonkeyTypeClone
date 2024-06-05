@@ -4,9 +4,21 @@
     z-index: 1;
 
 }
+
+
+@keyframes blink {
+	from { opacity: 1; }
+	to { opacity: 0; }
+}
 .default{
     color: rgb(209, 238, 244);
+                   
 
+}
+.defaultActive{
+    border-bottom: 3px solid yellow;
+    color: rgb(209, 238, 244);
+    
 }
 .correct{
 color: rgb(220, 196, 15);
@@ -15,24 +27,28 @@ color: rgb(220, 196, 15);
 color: rgb(29, 192, 198)
 }
 .typeHead {
-    font-size: 1.5em;
-    color: rgb(220, 196, 15);
+    font-size: 2em;
+    color:  rgb(209, 238, 244);
     border-radius: 25px;
-    background-color:#27296d;   
+  
     place-items: center;
+    font-family: monospace;
     
 
   }
 .typingTest2{
     font-size: 2em;    
     border-radius: 25px;
-    background-color: #27296d; 
+ 
     place-items: center;
+    font-family: monospace;
     
-    min-width: auto;
-    min-height: auto;
+    
+    /* min-width: auto;
+    min-height: auto; */
     
     
 }
-html {background-color: rgb(22, 11, 52);
+html {/*background-color: #27296d; */
+    background-color: rgb(22, 11, 52);
 }
