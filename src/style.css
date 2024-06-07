@@ -10,6 +10,10 @@
 	from { opacity: 1; }
 	to { opacity: 0; }
 }
+.accuracy{
+    color: rgb(209, 238, 244);
+
+}
 .default{
     color: rgb(209, 238, 244);
                    
