@@ -16,10 +16,11 @@ function App() {
   const [colorArray, setColorArray] = useState([]);
   const inputRef = useRef();
   const [accuracy, setAccuracy] = useState(0);
-  const [typing,setTyping]=useState(false)
-  const [timeRemaining,setTimeRemaining]=useState(30)
-  const [wpm,setWpm]=useState(0)
-  const [averageCharactersPerWord,setAverageCharactersPerWord]=useState(0)
+  const [typing, setTyping] = useState(false);
+  const [timeRemaining, setTimeRemaining] = useState(15);
+  const [wpm, setWpm] = useState(0);
+  const [averageCharactersPerWord, setAverageCharactersPerWord] = useState(0);
+  const [showResult, setShowResult] = useState(false);
 
   useEffect(() => {
     if (!isMounted.current) {
@@ -33,8 +34,10 @@ function App() {
           );
         setRerender(!rerender);
         //setRandInput(currRandomInput.current);
-        let wordsCount=currRandomInput.current.split(' ').length
-        setAverageCharactersPerWord(currRandomInput.current.length/wordsCount)
+        let wordsCount = currRandomInput.current.split(" ").length;
+        setAverageCharactersPerWord(
+          currRandomInput.current.length / wordsCount
+        );
         for (let i = 0; i < currRandomInput.current.length; i++) {
           setColorArray[(colorArray[i] = "default")];
         }
@@ -50,49 +53,49 @@ function App() {
   //   // this hook will get called every time myArr has changed
   //   // perform some action every time myArr is updated
   //   getAccuracy();
-    
-  // }, [correctLettersCount]);
-  
-  useEffect(()=>{
-    if(typing & timeRemaining>0)
-      {
-        timer()
-    
-      }
-    if(!typing)
-      { getAccuracy()
-        getWpm()
-        
-      }
 
-  },[typing,timeRemaining])
+  // }, [correctLettersCount]);
+
+  useEffect(() => {
+    if (typing & (timeRemaining > 0)) {
+      timer();
+    }
+    if ((!typing) &(timeRemaining == 0)) {
+      inputRef.current.blur();
+      getAccuracy();
+      getWpm();
+      setShowResult(true)
+    }
+    if (timeRemaining == 0){
+      setTyping(false)
+      
+    }
+  }, [typing, timeRemaining]);
   // function changeCursor(e){
   //   setCursorPosition(cursorPosition+" ")
   // }
   // function reloadPage() {
   //   window.location.reload(false);
   // }
-  function timer(){
-    let interval= setTimeout(()=>{
-      setTimeRemaining(timeRemaining-1)
-      
-
-    },1000)
-   }
+  function timer() {
+    let interval = setTimeout(() => {
+      setTimeRemaining(timeRemaining - 1);
+    }, 1000);
+  }
   function compareCharacters(e) {
-    setTyping(true)
-    
+    setTyping(true);
+
     if (e.keyCode != 8) {
       setCurrIndex(currIndex + 1);
       setUserInput(userInput + e.key);
 
       console.log(userInput + e.key);
-      console.log(currRandomInput.current[currIndex], e.key)
+      console.log(currRandomInput.current[currIndex], e.key);
     }
 
     // var ele=document.getElementById(currindex)
     // var eleValue=ele.value
-    
+
     //console.log(e.target.value.slice(-1))
     else {
       console.log(currRandomInput.current[currIndex], e.key);
@@ -121,8 +124,8 @@ function App() {
     if (currRandomInput.current[currIndex] === e.key) {
       // document.getElementById(`${currindex}`).className = "correct";
       setCorrectLettersCount(correctLettersCount + 1);
-      getAccuracy()
-      getWpm()
+      getAccuracy();
+      getWpm();
 
       console.log(correctLettersCount);
 
@@ -136,82 +139,93 @@ function App() {
     } else {
       // document.getElementById(`${currindex}`).className = "wrong";
       setColorArray[(colorArray[currIndex] = "wrong")];
-      getAccuracy()
-      getWpm()
-      
-      
+      getAccuracy();
+      getWpm();
     }
-    if (currIndex===currRandomInput.current.length-1){
-      
-      setTyping(false)
+    if (currIndex === currRandomInput.current.length - 1) {
+      setShowResult(true);
+      setTyping(false);
       inputRef.current.blur();
     }
   }
   function getAccuracy() {
-    setAccuracy((Math.floor((correctLettersCount / currRandomInput.current.length)*1000)/1000));
-    
+    setAccuracy(
+      Math.floor(
+        (correctLettersCount / currRandomInput.current.length) * 1000
+      ) / 1000
+    );
   }
-  function getWpm(){
-    setWpm((Math.floor((((correctLettersCount/averageCharactersPerWord)/(30-timeRemaining))*60)*1000)/1000))
-    
+  function getWpm() {
+    setWpm(
+      Math.floor(
+        (correctLettersCount /
+          averageCharactersPerWord /
+          (30 - timeRemaining)) *
+          60 *
+          1000
+      ) / 1000
+    );
   }
   return (
     <div className="container">
       <h1 className="typeHead">Typing Test</h1>
       <div className="timer">{timeRemaining}</div>
       {/* <button onClick={() => setRerender(!rerender)}>Click to generate new quote!</button> */}
-      <div className="typingTest">        
+      <div className="typingTest">
         <input
           ref={inputRef}
           type="text"
           className="userTypingArea"
           onKeyDown={compareCharacters}
-        />       
+        />
       </div>
 
-
       <div className="typingTest2">
-          {/* <i onKeyUp={changeCursor} >{cursorPosition}</i> */}
-          {currRandomInput.current.split("").map((char, index) => {
-            return (
-              <span
-                className={
-                  index === currIndex ? "defaultActive" : colorArray[index]
-                }
-                id={index}
-                key={index}
-              >
-                {char}
-                {/* {console.log(char)} */}
-              </span>
-            );
-          })}
-        </div>
-      
+        {/* <i onKeyUp={changeCursor} >{cursorPosition}</i> */}
+        {currRandomInput.current.split("").map((char, index) => {
+          return (
+            <span
+              className={
+                index === currIndex ? "defaultActive" : colorArray[index]
+              }
+              id={index}
+              key={index}
+            >
+              {char}
+              {/* {console.log(char)} */}
+            </span>
+          );
+        })}
+      </div>
+
       <div>
-          <button
-            className="refreshPage"
-            onClick={() => {
-              isMounted.current = false;
-              setCorrectLettersCount(0);
-              setCurrIndex(0);
-              setColorArray([]);
-              setUserInput("");
-              setTimeRemaining(30)
-              setAccuracy(0)
-              setWpm(0)
-            }}
-          >
-            <FontAwesomeIcon icon={faRedoAlt} />
-          </button>
-          {/* <button className="refreshPage" onClick={reloadPage}>
+        <button
+          className="refreshPage"
+          onClick={() => {
+            isMounted.current = false;
+            setCorrectLettersCount(0);
+            setCurrIndex(0);
+            setColorArray([]);
+            setUserInput("");
+            setTimeRemaining(15);
+            setAccuracy(0);
+            setWpm(0);
+            setShowResult(false);
+            
+          }}
+        >
+          <FontAwesomeIcon icon={faRedoAlt} />
+        </button>
+        {/* <button className="refreshPage" onClick={reloadPage}>
             ↻
           </button> */}
-        </div>
+      </div>
 
-      <div className="accuracy">{`accuracy - ${accuracy}`}</div>
+      <div
+        className={!showResult ? "accuracy" : "showAccuracy"}
+      >{`accuracy - ${accuracy}`}</div>
 
-      <div className="wpm">{`wpm - ${wpm}`}</div>
+      <div className={!showResult ? "wpm" : "showWpm"}>{`wpm - ${wpm}`}</div>
       {/* wrong useEffect(() => {
       props.actions.something();
         }, [])
