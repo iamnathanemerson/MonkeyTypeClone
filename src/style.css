@@ -1,58 +1,99 @@
-.userTypingArea{
-    opacity: 0;
-    position: absolute;
-    z-index: 1;
-
+.userTypingArea {
+  opacity: 0;
+  position: absolute;
+  z-index: 1;
 }
 
-
-@keyframes blink {
+/* @keyframes blink {
 	from { opacity: 1; }
 	to { opacity: 0; }
+} */
+.accuracy {
+  font-size: 2em;
+  color: rgb(220, 196, 15);
+  margin-top: 10px;
+  place-items: center;
+  font-family: monospace;
+  opacity: 100;
 }
-.accuracy{
-    color: rgb(209, 238, 244);
-
-}
-.default{
-    color: rgb(209, 238, 244);
-                   
-
-}
-.defaultActive{
-    border-bottom: 3px solid yellow;
-    color: rgb(209, 238, 244);
-    
-}
-.correct{
-color: rgb(220, 196, 15);
-}
-.wrong{
-color: rgb(29, 192, 198)
-}
-.typeHead {
+.showAccuracy {
     font-size: 2em;
-    color:  rgb(209, 238, 244);
-    border-radius: 25px;
-  
+    color: rgb(220, 196, 15);
+    margin-top: 10px;
     place-items: center;
     font-family: monospace;
+    opacity: 0;
     
-
   }
-.typingTest2{
-    font-size: 2em;    
-    border-radius: 25px;
- 
+.default {
+  color: rgb(209, 238, 244);
+}
+.wpm{
+
+  font-size: 2em;
+  color: rgb(220, 196, 15);
+  margin-top: 10px;
+  place-items: center;
+  opacity: 100;
+  font-family: monospace;
+}
+.showWpm{
+
+    font-size: 2em;
+    color: rgb(220, 196, 15);
+    margin-top: 10px;
+    place-items: center;
+    
+    font-family: monospace;
+  }
+.timer{
+    font-size: 2em;
+    color: rgb(220, 196, 15);
+    margin-top: 10px;
     place-items: center;
     font-family: monospace;
-    
-    
-    /* min-width: auto;
-    min-height: auto; */
-    
-    
 }
-html {/*background-color: #27296d; */
-    background-color: rgb(22, 11, 52);
+.refreshPage {
+  background-color: rgb(22, 11, 52);
+  border-color: rgb(22, 11, 52);
+  font-size: 1em;
+  color: rgb(209, 238, 244);
+  margin-top: 10px;
+  border: auto;
+  place-items: center;
+  opacity: 100%;
+}
+.defaultActive {
+  border-bottom: 3px solid yellow;
+  color: rgb(209, 238, 244);
+}
+.correct {
+  color: rgb(220, 196, 15);
+}
+.wrong {
+ 
+  background-color: rgb(29, 192, 198);
+}
+
+.typeHead {
+  font-size: 2em;
+  color: rgb(220, 196, 15);
+  border-radius: 25px;
+
+  place-items: center;
+  font-family: monospace;
+}
+.typingTest2 {
+  font-size: 2em;
+  border-radius: 25px;
+
+  place-items: center;
+  font-family: monospace;
+
+  /* min-width: auto;
+    min-height: auto; */
+}
+html {
+  /*background-color: #27296d; */
+  background-color: rgb(22, 11, 52);
 }
