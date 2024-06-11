@@ -84,7 +84,11 @@ function App() {
   }
   function compareCharacters(e) {
     setTyping(true);
-
+    if(e.keyCode===9){
+      setShowResult(true);
+      setTyping(false);
+      inputRef.current.blur();
+    }
     if (e.keyCode != 8) {
       setCurrIndex(currIndex + 1);
       setUserInput(userInput + e.key);
@@ -142,11 +146,12 @@ function App() {
       getAccuracy();
       getWpm();
     }
-    if (currIndex === currRandomInput.current.length - 1) {
+    if (currIndex === currRandomInput.current.length - 1 ) {
       setShowResult(true);
       setTyping(false);
       inputRef.current.blur();
     }
+
   }
   function getAccuracy() {
     setAccuracy(
