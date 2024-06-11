@@ -48,10 +48,13 @@
   }
 .timer{
     font-size: 2em;
+    background-color: rgb(22, 11, 52);
     color: rgb(220, 196, 15);
     margin-top: 10px;
+    margin-bottom: 10px;
     place-items: center;
     font-family: monospace;
+
 }
 .refreshPage {
   background-color: rgb(22, 11, 52);

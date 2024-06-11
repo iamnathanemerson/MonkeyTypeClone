@@ -11,6 +11,7 @@ function App() {
   const [rerender, setRerender] = useState(true); //to make sure latest input ref is shown in the return since useref change doesnt cause rerender
   const isMounted = useRef(false); //extra to prevent useeffect from running twice
   const currRandomInput = useRef("");
+  const currTestTime = useRef(30);
   const [correctLettersCount, setCorrectLettersCount] = useState(0);
   const [currIndex, setCurrIndex] = useState(0);
   const [colorArray, setColorArray] = useState([]);
@@ -57,20 +58,26 @@ function App() {
   // }, [correctLettersCount]);
 
   useEffect(() => {
+    if (!typing) {
+      setTimeRemaining(currTestTime.current);
+    }
+    // if ((!typing) &(timeRemaining != 0)){
+    //   setTimeRemaining(currTestTime.current)
+
+    // }
     if (typing & (timeRemaining > 0)) {
       timer();
     }
-    if ((!typing) &(timeRemaining == 0)) {
+    if (!typing & (timeRemaining == 0)) {
       inputRef.current.blur();
       getAccuracy();
       getWpm();
-      setShowResult(true)
+      setShowResult(true);
     }
-    if (timeRemaining == 0){
-      setTyping(false)
-      
+    if (timeRemaining == 0) {
+      setTyping(false);
     }
-  }, [typing, timeRemaining]);
+  }, [typing, timeRemaining, currTestTime]);
   // function changeCursor(e){
   //   setCursorPosition(cursorPosition+" ")
   // }
@@ -82,10 +89,13 @@ function App() {
       setTimeRemaining(timeRemaining - 1);
     }, 1000);
   }
+
   function compareCharacters(e) {
     setTyping(true);
-    if(e.keyCode===9){
-      setShowResult(true);
+    if (e.keyCode === 9) {
+      // getAccuracy();
+      // getWpm();
+      // setShowResult(true);
       setTyping(false);
       inputRef.current.blur();
     }
@@ -128,8 +138,6 @@ function App() {
     if (currRandomInput.current[currIndex] === e.key) {
       // document.getElementById(`${currindex}`).className = "correct";
       setCorrectLettersCount(correctLettersCount + 1);
-      getAccuracy();
-      getWpm();
 
       console.log(correctLettersCount);
 
@@ -146,12 +154,13 @@ function App() {
       getAccuracy();
       getWpm();
     }
-    if (currIndex === currRandomInput.current.length - 1 ) {
+    if (currIndex === currRandomInput.current.length - 1) {
       setShowResult(true);
+      getAccuracy();
+      getWpm();
       setTyping(false);
       inputRef.current.blur();
     }
-
   }
   function getAccuracy() {
     setAccuracy(
@@ -165,16 +174,35 @@ function App() {
       Math.floor(
         (correctLettersCount /
           averageCharactersPerWord /
-          (30 - timeRemaining)) *
+          (currTestTime.current - timeRemaining)) *
           60 *
           1000
       ) / 1000
     );
   }
+  function testTimer() {
+    if (!typing) {
+      if (currTestTime.current === 15) {
+        currTestTime.current = 30;
+        setTimeRemaining(30);
+      } else if (currTestTime.current === 30) {
+        currTestTime.current = 60;
+        setTimeRemaining(60);
+      } else if (currTestTime.current === 60) {
+        currTestTime.current = 15;
+        setTimeRemaining(15);
+      }
+      console.log(currTestTime.current);
+      inputRef.current.focus();
+    }
+  }
   return (
     <div className="container">
       <h1 className="typeHead">Typing Test</h1>
-      <div className="timer">{timeRemaining}</div>
+      {/* <div className="timer">{timeRemaining}</div> */}
+      <button className="timer" onClick={testTimer}>
+        {timeRemaining}
+      </button>
       {/* <button onClick={() => setRerender(!rerender)}>Click to generate new quote!</button> */}
       <div className="typingTest">
         <input
@@ -208,15 +236,15 @@ function App() {
           className="refreshPage"
           onClick={() => {
             isMounted.current = false;
+            setTyping(false);
             setCorrectLettersCount(0);
             setCurrIndex(0);
             setColorArray([]);
             setUserInput("");
-            setTimeRemaining(30);
+            setTimeRemaining(currTestTime.current);
             setAccuracy(0);
             setWpm(0);
             setShowResult(false);
-            
           }}
         >
           <FontAwesomeIcon icon={faRedoAlt} />
