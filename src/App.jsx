@@ -160,7 +160,7 @@ function App() {
       Math.floor(
         (correctLettersCount /
           averageCharactersPerWord /
-          (30 - timeRemaining)) *
+          (15 - timeRemaining)) *
           60 *
           1000
       ) / 1000
