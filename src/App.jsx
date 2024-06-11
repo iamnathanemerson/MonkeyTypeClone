@@ -17,7 +17,7 @@ function App() {
   const inputRef = useRef();
   const [accuracy, setAccuracy] = useState(0);
   const [typing, setTyping] = useState(false);
-  const [timeRemaining, setTimeRemaining] = useState(15);
+  const [timeRemaining, setTimeRemaining] = useState(30);
   const [wpm, setWpm] = useState(0);
   const [averageCharactersPerWord, setAverageCharactersPerWord] = useState(0);
   const [showResult, setShowResult] = useState(false);
@@ -160,7 +160,7 @@ function App() {
       Math.floor(
         (correctLettersCount /
           averageCharactersPerWord /
-          (15 - timeRemaining)) *
+          (30 - timeRemaining)) *
           60 *
           1000
       ) / 1000
@@ -207,7 +207,7 @@ function App() {
             setCurrIndex(0);
             setColorArray([]);
             setUserInput("");
-            setTimeRemaining(15);
+            setTimeRemaining(30);
             setAccuracy(0);
             setWpm(0);
             setShowResult(false);
